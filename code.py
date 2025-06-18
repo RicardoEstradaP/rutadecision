@@ -56,13 +56,13 @@ st.markdown("---")
 st.subheader("Paso 1: Objetivo del análisis")
 step = st.radio(
     "¿Cuál es tu objetivo principal?",
-    ["Selecciona una opción", "Comparar grupos", "Evaluar relación entre variables", "Predecir una variable"],
+    ["⬜ Elige una opción", "📊 Comparar grupos", "🔗 Evaluar relación entre variables", "📈 Predecir una variable"],
     index=0,
     help="Elige si deseas comparar grupos, explorar relaciones o hacer predicciones."
 )
 
 # Opción: Comparar grupos
-if step == "Comparar grupos":
+if step == "📊 Comparar grupos":
     st.subheader("Paso 2: Número de grupos")
     n_groups = st.radio(
         "¿Cuántos grupos quieres comparar?",
@@ -133,7 +133,7 @@ if step == "Comparar grupos":
                     st.markdown("**Ejemplo:** Comparar bienestar entre tres técnicas con datos no normales.")
 
 # Opción: Evaluar relación entre variables
-elif step == "Evaluar relación entre variables":
+elif step == "🔗 Evaluar relación entre variables":
     st.subheader("Paso 2: Tipo de variables")
     tipo_var = st.radio(
         "¿Las variables son cuantitativas?",
@@ -161,7 +161,7 @@ elif step == "Evaluar relación entre variables":
         st.markdown("**Ejemplo:** Relación entre nivel socioeconómico (ordinal) y autoestima.")
 
 # Opción: Predecir una variable
-elif step == "Predecir una variable":
+elif step == "📈 Predecir una variable":
     st.subheader("Paso 2: Tipo de variables involucradas")
     pred_var = st.radio(
         "¿La variable que quieres predecir es cuantitativa?",
