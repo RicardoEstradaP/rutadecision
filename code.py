@@ -55,7 +55,7 @@ st.markdown("""
 
 # Título con emoji y subtítulo
 st.title("🌟 Ruta de Decisión Estadística")
-st.markdown("**¿No sabes qué prueba estadística usar?**\n\nSigue esta ruta sencilla paso a paso para elegir la prueba ideal según tus datos. Ejemplos enfocados en psicología para hacerlo fácil y práctico.")
+st.markdown("**¿No sabes qué prueba estadística usar?**\n\nSigue esta ruta sencilla paso a paso para elegir la prueba ideal según tus datos.")
 
 st.markdown("---")
 st.subheader("Paso 1: Objetivo del análisis")
