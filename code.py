@@ -1,9 +1,61 @@
 import streamlit as st
 
+# Configuración general
 st.set_page_config(page_title="Ruta de Pruebas Estadísticas", layout="wide")
 
-st.title("🔍 Ruta de Decisión para Seleccionar Pruebas Estadísticas")
-st.markdown("Esta herramienta te guía paso a paso para saber qué prueba estadística usar. Pensada especialmente para psicología. Cada paso incluye una breve explicación para facilitar tu decisión.")
+# Estilos CSS inline para diseño minimalista y fresco
+st.markdown("""
+<style>
+    /* Fondo claro con tonalidad suave */
+    .main {
+        background-color: #f7f9fc;
+        color: #333333;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    /* Encabezados con color y fuente moderna */
+    h1, h2, h3, h4 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    /* Botones de opción con más espacio */
+    .stRadio > div > label {
+        padding: 8px 15px;
+        border-radius: 8px;
+        background-color: #e1ecf4;
+        margin-bottom: 8px;
+        display: block;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .stRadio > div > label:hover {
+        background-color: #c8d7ea;
+    }
+    /* Resaltar opción seleccionada */
+    .stRadio > div > label[data-baseweb="radio"] input:checked + span {
+        background-color: #3498db !important;
+        color: white !important;
+    }
+    /* Mensajes de éxito estilizados */
+    .stSuccess {
+        background-color: #d1f0d1;
+        border-left: 5px solid #27ae60;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+    }
+    /* Separadores */
+    hr {
+        border: none;
+        height: 1px;
+        background-color: #dce3e8;
+        margin: 25px 0;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Título con emoji y subtítulo
+st.title("🌟 Ruta de Decisión Estadística")
+st.markdown("**¿No sabes qué prueba estadística usar?**\n\nSigue esta ruta sencilla paso a paso para elegir la prueba ideal según tus datos. Ejemplos enfocados en psicología para hacerlo fácil y práctico.")
 
 st.markdown("---")
 st.subheader("Paso 1: Objetivo del análisis")
@@ -20,7 +72,7 @@ if step == "Comparar grupos":
         "¿Cuántos grupos quieres comparar?",
         ["Selecciona", "2 grupos", "Más de 2 grupos"],
         index=0,
-        help="Selecciona '2 grupos' si estás comparando dos condiciones o grupos. Selecciona 'Más de 2 grupos' si estás comparando tres o más."
+        help="Selecciona '2 grupos' si estás comparando dos condiciones o grupos. 'Más de 2 grupos' si comparas tres o más."
     )
 
     if n_groups == "2 grupos":
@@ -29,7 +81,7 @@ if step == "Comparar grupos":
             "¿Las muestras son relacionadas o independientes?",
             ["Selecciona", "Relacionadas", "Independientes"],
             index=0,
-            help="Relacionadas: los mismos participantes en ambas condiciones (antes y después). Independientes: grupos distintos."
+            help="Relacionadas: mismos participantes en ambas condiciones (antes y después). Independientes: grupos distintos."
         )
 
         if tipo in ["Relacionadas", "Independientes"]:
@@ -38,7 +90,7 @@ if step == "Comparar grupos":
                 "¿Los datos cumplen normalidad y varianzas homogéneas?",
                 ["Selecciona", "Sí", "No"],
                 index=0,
-                help="Los datos deben tener distribución normal y varianzas similares para usar pruebas paramétricas."
+                help="Datos normales y varianzas similares permiten usar pruebas paramétricas."
             )
 
             if param == "Sí":
@@ -51,7 +103,7 @@ if step == "Comparar grupos":
             elif param == "No":
                 if tipo == "Relacionadas":
                     st.success("✅ Usa **Wilcoxon**")
-                    st.markdown("**Ejemplo:** Comparar autoestima antes y después de un taller cuando los datos no son normales.")
+                    st.markdown("**Ejemplo:** Comparar autoestima antes y después de un taller con datos no normales.")
                 else:
                     st.success("✅ Usa **U de Mann-Whitney**")
                     st.markdown("**Ejemplo:** Comparar empatía entre dos grupos distintos con datos no normales.")
@@ -62,7 +114,7 @@ if step == "Comparar grupos":
             "¿Las muestras son relacionadas o independientes?",
             ["Selecciona", "Relacionadas", "Independientes"],
             index=0,
-            help="Relacionadas: los mismos participantes evaluados varias veces. Independientes: grupos diferentes."
+            help="Relacionadas: mismos participantes evaluados varias veces. Independientes: grupos diferentes."
         )
 
         if tipo in ["Relacionadas", "Independientes"]:
@@ -71,13 +123,13 @@ if step == "Comparar grupos":
                 "¿Los datos cumplen normalidad y varianzas homogéneas?",
                 ["Selecciona", "Sí", "No"],
                 index=0,
-                help="Los datos normales y con varianzas similares permiten usar ANOVA."
+                help="Datos normales y homogéneos permiten usar ANOVA."
             )
 
             if param == "Sí":
                 if tipo == "Relacionadas":
                     st.success("✅ Usa **ANOVA de medidas repetidas**")
-                    st.markdown("**Ejemplo:** Evaluar el efecto de 3 terapias en los mismos pacientes.")
+                    st.markdown("**Ejemplo:** Evaluar efecto de 3 terapias en los mismos pacientes.")
                 else:
                     st.success("✅ Usa **ANOVA de un factor**")
                     st.markdown("**Ejemplo:** Comparar estrés entre tres grupos distintos.")
@@ -119,4 +171,4 @@ elif step == "Evaluar relación entre variables":
         st.markdown("**Ejemplo:** Relación entre nivel socioeconómico (ordinal) y autoestima.")
 
 st.markdown("---")
-st.caption("Desarrollado para decisiones estadísticas en psicología.")
+st.caption("✨ Diseñado para decisiones estadísticas en psicología • Minimalista y fresco")
