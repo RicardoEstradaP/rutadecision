@@ -13,7 +13,7 @@ st.subheader("Paso 1: Objetivo del análisis")
 step = st.radio("¿Cuál es tu objetivo principal?", [
     "Comparar grupos",
     "Evaluar relación entre variables"
-], help="Selecciona si deseas comparar grupos (por ejemplo, antes y después de una intervención) o si deseas evaluar la relación entre variables (por ejemplo, ansiedad y depresión).")
+], help="Selecciona si deseas comparar grupos (por ejemplo, antes y después de una intervención, o entre distintos grupos de tratamiento) o si deseas evaluar la relación entre variables (por ejemplo, ansiedad y depresión).")
 
 if step == "Comparar grupos":
     st.markdown("---")
