@@ -3,21 +3,18 @@ import streamlit as st
 # Configuración general
 st.set_page_config(page_title="Ruta de Pruebas Estadísticas", layout="wide")
 
-# Estilos CSS inline para diseño minimalista y fresco
+# Estilos CSS
 st.markdown("""
 <style>
-    /* Fondo claro con tonalidad suave */
     .main {
         background-color: #f7f9fc;
         color: #333333;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    /* Encabezados con color y fuente moderna */
     h1, h2, h3, h4 {
         color: #2c3e50;
         font-weight: 600;
     }
-    /* Botones de opción con más espacio */
     .stRadio > div > label {
         padding: 8px 15px;
         border-radius: 8px;
@@ -30,12 +27,10 @@ st.markdown("""
     .stRadio > div > label:hover {
         background-color: #c8d7ea;
     }
-    /* Resaltar opción seleccionada */
     .stRadio > div > label[data-baseweb="radio"] input:checked + span {
         background-color: #3498db !important;
         color: white !important;
     }
-    /* Mensajes de éxito estilizados */
     .stSuccess {
         background-color: #d1f0d1;
         border-left: 5px solid #27ae60;
@@ -43,7 +38,6 @@ st.markdown("""
         border-radius: 6px;
         margin-top: 15px;
     }
-    /* Separadores */
     hr {
         border: none;
         height: 1px;
@@ -53,26 +47,27 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Título con emoji y subtítulo
+# Título y subtítulo
 st.title("🌟 Ruta de Decisión Estadística")
 st.markdown("**¿No sabes qué prueba estadística usar?**\n\nSigue esta ruta sencilla paso a paso para elegir la prueba ideal según tus datos.")
-
 st.markdown("---")
+
+# Paso 1
 st.subheader("Paso 1: Objetivo del análisis")
 step = st.radio(
     "¿Cuál es tu objetivo principal?",
-    ["Selecciona una opción", "Comparar grupos", "Evaluar relación entre variables"],
+    ["Selecciona una opción", "Comparar grupos", "Evaluar relación entre variables", "Predecir una variable"],
     index=0,
-    help="¿Quieres comparar grupos (como control vs experimental, o antes y después de una intervención) o evaluar la relación entre variables (como ansiedad y autoestima)?"
+    help="Elige si deseas comparar grupos, explorar relaciones o hacer predicciones."
 )
 
+# Opción: Comparar grupos
 if step == "Comparar grupos":
     st.subheader("Paso 2: Número de grupos")
     n_groups = st.radio(
         "¿Cuántos grupos quieres comparar?",
         ["Selecciona", "2 grupos", "Más de 2 grupos"],
-        index=0,
-        help="Selecciona '2 grupos' si estás comparando dos condiciones o grupos. 'Más de 2 grupos' si comparas tres o más."
+        index=0
     )
 
     if n_groups == "2 grupos":
@@ -80,8 +75,7 @@ if step == "Comparar grupos":
         tipo = st.radio(
             "¿Las muestras son relacionadas o independientes?",
             ["Selecciona", "Relacionadas", "Independientes"],
-            index=0,
-            help="Relacionadas: mismos participantes en ambas condiciones (antes y después). Independientes: grupos distintos."
+            index=0
         )
 
         if tipo in ["Relacionadas", "Independientes"]:
@@ -89,8 +83,7 @@ if step == "Comparar grupos":
             param = st.radio(
                 "¿Los datos cumplen normalidad y varianzas homogéneas?",
                 ["Selecciona", "Sí", "No"],
-                index=0,
-                help="Datos normales y varianzas similares permiten usar pruebas paramétricas."
+                index=0
             )
 
             if param == "Sí":
@@ -113,8 +106,7 @@ if step == "Comparar grupos":
         tipo = st.radio(
             "¿Las muestras son relacionadas o independientes?",
             ["Selecciona", "Relacionadas", "Independientes"],
-            index=0,
-            help="Relacionadas: mismos participantes evaluados varias veces. Independientes: grupos diferentes."
+            index=0
         )
 
         if tipo in ["Relacionadas", "Independientes"]:
@@ -122,8 +114,7 @@ if step == "Comparar grupos":
             param = st.radio(
                 "¿Los datos cumplen normalidad y varianzas homogéneas?",
                 ["Selecciona", "Sí", "No"],
-                index=0,
-                help="Datos normales y homogéneos permiten usar ANOVA."
+                index=0
             )
 
             if param == "Sí":
@@ -141,13 +132,13 @@ if step == "Comparar grupos":
                     st.success("✅ Usa **Kruskal-Wallis**")
                     st.markdown("**Ejemplo:** Comparar bienestar entre tres técnicas con datos no normales.")
 
+# Opción: Evaluar relación entre variables
 elif step == "Evaluar relación entre variables":
     st.subheader("Paso 2: Tipo de variables")
     tipo_var = st.radio(
         "¿Las variables son cuantitativas?",
         ["Selecciona", "Sí", "No o datos no normales"],
-        index=0,
-        help="Cuantitativas: edad, puntajes, horas. Si alguna es ordinal o no normal, selecciona la segunda opción."
+        index=0
     )
 
     if tipo_var == "Sí":
@@ -155,8 +146,7 @@ elif step == "Evaluar relación entre variables":
         relacion = st.radio(
             "¿Tienen distribución normal y relación lineal?",
             ["Selecciona", "Sí", "No"],
-            index=0,
-            help="Si hay relación lineal y normalidad, usa Pearson. Si no, Spearman."
+            index=0
         )
 
         if relacion == "Sí":
@@ -169,6 +159,57 @@ elif step == "Evaluar relación entre variables":
     elif tipo_var == "No o datos no normales":
         st.success("✅ Usa **Correlación de Spearman**")
         st.markdown("**Ejemplo:** Relación entre nivel socioeconómico (ordinal) y autoestima.")
+
+# Opción: Predecir una variable
+elif step == "Predecir una variable":
+    st.subheader("Paso 2: Tipo de variables involucradas")
+    pred_var = st.radio(
+        "¿La variable que quieres predecir es cuantitativa?",
+        ["Selecciona", "Sí", "No"],
+        index=0
+    )
+
+    if pred_var == "Sí":
+        st.subheader("Paso 3: Número de predictores")
+        n_preds = st.radio(
+            "¿Cuántas variables usarás para predecir?",
+            ["Selecciona", "Una", "Dos o más"],
+            index=0
+        )
+
+        if n_preds == "Una":
+            st.subheader("Paso 4: Supuestos del modelo")
+            sup = st.radio(
+                "¿Relación lineal, normalidad y homocedasticidad?",
+                ["Selecciona", "Sí", "No"],
+                index=0
+            )
+
+            if sup == "Sí":
+                st.success("✅ Usa **Regresión lineal simple**")
+                st.markdown("**Ejemplo:** Predecir estatura a partir del peso.")
+            elif sup == "No":
+                st.success("✅ Usa **Modelos no paramétricos o transformación de datos**")
+                st.markdown("**Ejemplo:** Si la relación no es lineal, intenta transformación logarítmica o una regresión no paramétrica.")
+
+        elif n_preds == "Dos o más":
+            st.subheader("Paso 4: Supuestos del modelo")
+            sup = st.radio(
+                "¿Se cumplen linealidad, normalidad, homocedasticidad y no multicolinealidad?",
+                ["Selecciona", "Sí", "No"],
+                index=0
+            )
+
+            if sup == "Sí":
+                st.success("✅ Usa **Regresión lineal múltiple**")
+                st.markdown("**Ejemplo:** Predecir nivel de estrés usando horas de sueño y apoyo social.")
+            elif sup == "No":
+                st.success("✅ Considera **regresión robusta o regularización**")
+                st.markdown("**Ejemplo:** Usa regresión de Ridge, Lasso o técnicas no paramétricas.")
+
+    elif pred_var == "No":
+        st.success("✅ Usa **Regresión logística binaria o multinomial**")
+        st.markdown("**Ejemplo:** Predecir si una persona tiene ansiedad (sí/no) a partir de variables cuantitativas.")
 
 st.markdown("---")
 st.caption("✨ Ricardo Estrada")
