@@ -171,4 +171,4 @@ elif step == "Evaluar relación entre variables":
         st.markdown("**Ejemplo:** Relación entre nivel socioeconómico (ordinal) y autoestima.")
 
 st.markdown("---")
-st.caption("✨ Diseñado para decisiones estadísticas en psicología • Minimalista y fresco")
+st.caption("✨ Ricardo Estrada")
