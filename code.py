@@ -84,5 +84,5 @@ elif step == "Evaluar relación entre variables":
         st.markdown("**Ejemplo:** Relación entre nivel socioeconómico (ordinal) y autoestima.")
 
 # Footer
-st.markdown(\"---\")
-st.caption(\"Desarrollado para decisiones estadísticas en psicología.\")
+st.markdown("---")
+st.caption("Desarrollado para decisiones estadísticas en psicología.")
