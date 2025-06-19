@@ -1,4 +1,3 @@
-# 👇 Copia y pega este código completo en tu app de Streamlit
 import streamlit as st
 
 # Configuración general
