@@ -1,3 +1,4 @@
+# 👇 Copia y pega este código completo en tu app de Streamlit
 import streamlit as st
 
 # Configuración general
@@ -61,38 +62,32 @@ step = st.radio(
     help="Elige si deseas comparar grupos, explorar relaciones o hacer predicciones."
 )
 
-# Opción: Comparar grupos
+# Comparar grupos
 if step == "📊 Comparar grupos":
     st.subheader("Paso 2: Número de grupos")
-    n_groups = st.radio(
-        "¿Cuántos grupos quieres comparar?",
-        ["Selecciona", "2 grupos", "Más de 2 grupos"],
-        index=0
-    )
+    n_groups = st.radio("¿Cuántos grupos quieres comparar?", ["Selecciona", "2 grupos", "Más de 2 grupos"], index=0)
 
     if n_groups == "2 grupos":
         st.subheader("Paso 3: Tipo de muestras")
-        tipo = st.radio(
-            "¿Las muestras son relacionadas o independientes?",
-            ["Selecciona", "Relacionadas", "Independientes"],
-            index=0
-        )
+        tipo = st.radio("¿Las muestras son relacionadas o independientes?", ["Selecciona", "Relacionadas", "Independientes"], index=0)
 
         if tipo in ["Relacionadas", "Independientes"]:
             st.subheader("Paso 4: Supuestos de los datos")
-            param = st.radio(
-                "¿Los datos cumplen normalidad y varianzas homogéneas?",
-                ["Selecciona", "Sí", "No"],
-                index=0
-            )
+            param = st.radio("¿Los datos cumplen normalidad?", ["Selecciona", "Sí", "No"], index=0)
 
             if param == "Sí":
                 if tipo == "Relacionadas":
                     st.success("✅ Usa **t de Student para muestras relacionadas**")
                     st.markdown("**Ejemplo:** Comparar ansiedad antes y después de una intervención en los mismos pacientes.")
                 else:
-                    st.success("✅ Usa **t de Student para muestras independientes**")
-                    st.markdown("**Ejemplo:** Comparar ansiedad entre grupo control y grupo experimental.")
+                    st.subheader("Paso 5: ¿Las varianzas entre los grupos son homogéneas?")
+                    var_equal = st.radio("¿Las varianzas son homogéneas (prueba de Levene no significativa)?", ["Selecciona", "Sí", "No"], index=0)
+                    if var_equal == "Sí":
+                        st.success("✅ Usa **t de Student para muestras independientes**")
+                        st.markdown("**Ejemplo:** Comparar ansiedad entre grupo control y grupo experimental con varianzas iguales.")
+                    elif var_equal == "No":
+                        st.success("✅ Usa **t de Welch**")
+                        st.markdown("**Ejemplo:** Comparar rendimiento entre grupos con distinta dispersión de puntajes.")
             elif param == "No":
                 if tipo == "Relacionadas":
                     st.success("✅ Usa **Wilcoxon**")
@@ -103,19 +98,11 @@ if step == "📊 Comparar grupos":
 
     elif n_groups == "Más de 2 grupos":
         st.subheader("Paso 3: Tipo de muestras")
-        tipo = st.radio(
-            "¿Las muestras son relacionadas o independientes?",
-            ["Selecciona", "Relacionadas", "Independientes"],
-            index=0
-        )
+        tipo = st.radio("¿Las muestras son relacionadas o independientes?", ["Selecciona", "Relacionadas", "Independientes"], index=0)
 
         if tipo in ["Relacionadas", "Independientes"]:
             st.subheader("Paso 4: Supuestos de los datos")
-            param = st.radio(
-                "¿Los datos cumplen normalidad y varianzas homogéneas?",
-                ["Selecciona", "Sí", "No"],
-                index=0
-            )
+            param = st.radio("¿Los datos cumplen normalidad y varianzas homogéneas?", ["Selecciona", "Sí", "No"], index=0)
 
             if param == "Sí":
                 if tipo == "Relacionadas":
@@ -132,22 +119,14 @@ if step == "📊 Comparar grupos":
                     st.success("✅ Usa **Kruskal-Wallis**")
                     st.markdown("**Ejemplo:** Comparar bienestar entre tres técnicas con datos no normales.")
 
-# Opción: Evaluar relación entre variables
+# Relación entre variables
 elif step == "🔗 Evaluar relación entre variables":
     st.subheader("Paso 2: Tipo de variables")
-    tipo_var = st.radio(
-        "¿Las variables son cuantitativas?",
-        ["Selecciona", "Sí", "No o datos no normales"],
-        index=0
-    )
+    tipo_var = st.radio("¿Las variables son cuantitativas?", ["Selecciona", "Sí", "No o datos no normales"], index=0)
 
     if tipo_var == "Sí":
         st.subheader("Paso 3: Supuestos de relación")
-        relacion = st.radio(
-            "¿Tienen distribución normal y relación lineal?",
-            ["Selecciona", "Sí", "No"],
-            index=0
-        )
+        relacion = st.radio("¿Tienen distribución normal y relación lineal?", ["Selecciona", "Sí", "No"], index=0)
 
         if relacion == "Sí":
             st.success("✅ Usa **Correlación de Pearson**")
@@ -160,30 +139,18 @@ elif step == "🔗 Evaluar relación entre variables":
         st.success("✅ Usa **Correlación de Spearman**")
         st.markdown("**Ejemplo:** Relación entre nivel socioeconómico (ordinal) y autoestima.")
 
-# Opción: Predecir una variable
+# Predecir una variable
 elif step == "📈 Predecir una variable":
     st.subheader("Paso 2: Tipo de variables involucradas")
-    pred_var = st.radio(
-        "¿La variable que quieres predecir es cuantitativa?",
-        ["Selecciona", "Sí", "No"],
-        index=0
-    )
+    pred_var = st.radio("¿La variable que quieres predecir es cuantitativa?", ["Selecciona", "Sí", "No"], index=0)
 
     if pred_var == "Sí":
         st.subheader("Paso 3: Número de predictores")
-        n_preds = st.radio(
-            "¿Cuántas variables usarás para predecir?",
-            ["Selecciona", "Una", "Dos o más"],
-            index=0
-        )
+        n_preds = st.radio("¿Cuántas variables usarás para predecir?", ["Selecciona", "Una", "Dos o más"], index=0)
 
         if n_preds == "Una":
             st.subheader("Paso 4: Supuestos del modelo")
-            sup = st.radio(
-                "¿Relación lineal, normalidad y homocedasticidad?",
-                ["Selecciona", "Sí", "No"],
-                index=0
-            )
+            sup = st.radio("¿Relación lineal, normalidad y homocedasticidad?", ["Selecciona", "Sí", "No"], index=0)
 
             if sup == "Sí":
                 st.success("✅ Usa **Regresión lineal simple**")
@@ -194,11 +161,7 @@ elif step == "📈 Predecir una variable":
 
         elif n_preds == "Dos o más":
             st.subheader("Paso 4: Supuestos del modelo")
-            sup = st.radio(
-                "¿Se cumplen linealidad, normalidad, homocedasticidad y no multicolinealidad?",
-                ["Selecciona", "Sí", "No"],
-                index=0
-            )
+            sup = st.radio("¿Se cumplen linealidad, normalidad, homocedasticidad y no multicolinealidad?", ["Selecciona", "Sí", "No"], index=0)
 
             if sup == "Sí":
                 st.success("✅ Usa **Regresión lineal múltiple**")
